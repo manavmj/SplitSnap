@@ -38,7 +38,8 @@ npm run dev
 A "Use a sample bill" demo mode is available for trying the app without an API key.
 
 Built because the argument over the bill is a genuine engineering problem dressed up as a social one — and every group has it.
-#Screenshots:
+
+**Screenshots:**
 
 <img width="2878" height="1534" alt="image" src="https://github.com/user-attachments/assets/49c88fe1-de63-42bb-ad55-18f13da63e43" />
 <img width="2850" height="1532" alt="image" src="https://github.com/user-attachments/assets/d2bd87aa-3e68-46ba-bd38-d376408a0ada" />
