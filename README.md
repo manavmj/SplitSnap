@@ -1,41 +1,58 @@
 # SplitSnap
 A photo-in, fair-split-out bill splitter — split tax and service charge by what you actually ate, not by headcount.
-SplitSnap 🧾
-
-Split restaurant bills fairly, from a single photo.
 
 SplitSnap solves the group-dinner math problem everyone gets wrong: dividing tax and service charge evenly by headcount, even when one person only had a Coke and someone else shared the biryani.
 
-Upload a photo of the bill, tell it who ate what, and get an exact per-person breakdown, with tax and service charge split proportionally to what each person actually ordered, not divided evenly by the number of people at the table.
+Upload a photo of the bill, tell it who ate what, and get an exact per-person breakdown — with tax and service charge split proportionally to what each person actually ordered.
 
-How it works:-
-Upload : Snap a photo of the bill. An AI vision model (Gemini) extracts a structured breakdown: every line item, quantity, price, subtotal, GST, service charge, discount, and total.
-
-Review : Nothing gets calculated blindly. Low-confidence fields (smudged prices, faded thermal print, handwriting) are flagged for you to check and correct before any math runs.
-
-Assign : Add the people at the table. Tag each item to one person, a few people (split evenly shared appetizers, a biryani for two), or everyone.
-
-Split : Get an exact per-person total: item subtotal + their fair share of tax and service charge, correctly proportional to what they ate.
-
+How it works
+Upload — Snap a photo of the bill. Gemini's vision model extracts a structured breakdown: every line item, quantity, price, subtotal, GST, service charge, discount, and total.
+Review — Nothing gets calculated blindly. Low-confidence fields (smudged prices, faded thermal print, handwriting) are flagged for you to check and correct before any math runs.
+Assign — Add the people at the table. Tag each item to one person, a few people (split evenly), or everyone.
+Split — Get an exact per-person total: item subtotal + their fair share of tax and service charge, correctly proportional to what they ate.
 Why this is harder than it looks
 
-Most bill splitting apps just divide the total by the number of people, or split tax evenly regardless of who ordered what. That's the wrong answer everyone quietly accepts. SplitSnap computes each person's share of tax, service charge, and discounts in proportion to their item subtotal — so the person who only had a Coke doesn't subsidize the table's shared appetizers.
-
-It also treats OCR as fallible by design: every extracted field carries a confidence score, and a human review step sits between "photo in" and "math runs," so a misread ₹450 doesn't silently become someone's dinner bill.
+Most bill-splitting apps just divide the total by the number of people. SplitSnap computes each person's share of tax, service charge, and discounts in proportion to their item subtotal — so the person who only had a Coke doesn't subsidize the table's shared appetizers. It also treats OCR as fallible by design: every extracted field carries a confidence score, and a human review step sits between "photo in" and "math runs."
 
 Tech
-Single-page React app — upload → review → assign → result, no chat interface, no login, no database
-Structured extraction via Google Gemini's multimodal API, validated against a strict schema
+Single-page React app (Vite) — upload → review → assign → result
+Structured extraction via Google Gemini's multimodal API
 Rounding-reconciled math so per-person totals always sum exactly to the printed bill total
-Setup
+Getting started
+Prerequisites
+Node.js (v18 or later recommended)
+A free Google Gemini API key
+1. Clone the repo
 bash
-git clone <repo-url>
+git clone https://github.com/<your-username>/splitsnap.git
 cd splitsnap
+2. Install dependencies
+bash
 npm install
-Copy-Item .env.example .env   # then add your VITE_GEMINI_API_KEY
+3. Set up your API key
+
+Copy the example environment file:
+
+bash
+cp .env.example .env      # macOS/Linux
+Copy-Item .env.example .env   # Windows PowerShell
+
+Open .env and add your Gemini API key:
+
+VITE_GEMINI_API_KEY=your_actual_gemini_key
+4. Run the app
+bash
 npm run dev
 
-A "Use a sample bill" demo mode is available for trying the app without an API key.
+Open the local URL shown in your terminal (usually http://localhost:5173) in your browser.
+
+No API key yet?
+
+Click "Use a sample bill" on the upload screen to try the full review → assign → split flow with demo data — no key required.
+
+Build for production
+bash
+npm run build
 
 Built because the argument over the bill is a genuine engineering problem dressed up as a social one — and every group has it.
 
